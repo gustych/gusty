@@ -1,81 +1,41 @@
-# Gusty Portfolio
+# Gusty
 
-Personal portfolio of Güney Usta — design, writing, AI engineering.
+Personal portfolio for Güney Usta: design, writing, and AI-assisted systems.
 
-**Live:** [gusty.ch](https://gusty.ch)
+- Live: [gusty.ch](https://gusty.ch)
+- Stack: Next.js 16, React 19, TypeScript, Tailwind CSS
+- Deploy: Vercel
 
-## Tech Stack
+## What It Does
 
-- Next.js 16 (App Router), React 19, TypeScript, Tailwind CSS v3
-- Fonts: Playfair Display, IBM Plex Mono, Permanent Marker
-- Deployed on Vercel
+- Shows portfolio projects across human-made, AI-assisted, and teamed-up work
+- Supports English and German copy
+- Opens rich project notes in modals
+- Keeps experimental work behind an env-gated danger zone
 
-## Features
+## Project Content
 
-- Split-screen layout: human-made (pink) / AI-assisted (teal) / teamed-up (gradient)
-- DE/EN language toggle with localStorage persistence
-- 10 portfolio projects with bilingual content
-- Interactive project modals with tabs for bridged projects
-- Custom cursor (desktop), mobile filter tabs
-- Danger zone (env-gated) with confirmation modal
-- Dynamic favicon via Next.js ImageResponse
+- Project data lives in `lib/projects/`
+- `lib/projects/index.ts` controls what appears on gusty.ch
+- Each project exports one `Project` object
+- Set `column` to `design`, `ai`, `bridged`, or `danger`
 
-## Project Structure
-
-```
-app/
-  layout.tsx          # Root layout, LanguageProvider wrapper
-  page.tsx            # Homepage, project grid, danger zone
-  icon.tsx            # Favicon generation (32x32 PNG)
-lib/
-  types.ts            # Project, BilingualText, t() helper
-  i18n/
-    context.tsx       # LanguageProvider + useLanguage()
-    translations.ts   # UI strings EN/DE
-  projects/
-    index.ts          # Re-exports all projects as array
-    badenleg.ts       # Each project = separate file
-    ...               # 10 project files total
-components/
-  Header.tsx          # Logo, definitions, language toggle, social menu
-  ProjectCard.tsx     # design/ai/bridged cards
-  DangerCard.tsx      # Danger zone cards
-  ProjectModal.tsx    # Full-screen modal with bilingual content
-  ATSProjectContent.tsx # ATS templates (self-contained i18n)
-  LanguageToggle.tsx  # DE/EN toggle button
-```
-
-## Adding a Project
-
-1. Create `lib/projects/myproject.ts` with a `Project` export
-2. Add import + entry in `lib/projects/index.ts`
-3. Set `column` to `design`, `ai`, `bridged`, or `danger`
-4. Use `{ en: '...', de: '...' }` for bilingual fields
-
-## Getting Started
+## Run Locally
 
 ```bash
 npm install
-npm run dev        # localhost:3000
-npm run build      # production build
+npm run dev
+npm run build
 ```
 
-## Activity Log
+## Main Files
 
-Last 10 commits (auto-generated):
+- `app/page.tsx`: homepage grid
+- `components/ProjectCard.tsx`: project cards
+- `components/ProjectModal.tsx`: project detail modal
+- `lib/i18n/`: language state and UI strings
+- `lib/projects/`: portfolio content
 
-- **chore: remove party microsite** (d3f7a3f) - 29 seconds ago by wgusta
-- **Update Activity Log [skip ci]** (6d92179) - 3 weeks ago by github-actions[bot]
-- **feat(party): launch live bring-list microsite** (2b5edc8) - 3 weeks ago by wgusta
-- **Summarize workflow and design edits** (2fc0f6a) - 2 months ago by wgusta
-- **Replace g letter with logo** (3db6842) - 3 months ago by wgusta
-- **Update Activity Log [skip ci]** (1b67ac5) - 3 months ago by github-actions[bot]
-- **feat(branding): replace page title icon with white logo** (44e7f3a) - 3 months ago by wgusta
-- **Update Activity Log [skip ci]** (4cf6140) - 3 months ago by github-actions[bot]
-- **Replace Gusty logo and adjust cut** (afbb127) - 3 months ago by wgusta
-- **Update Activity Log [skip ci]** (f5faf83) - 3 months ago by github-actions[bot]
-
-View full commit history: [GitHub Commits](https://github.com/wgusta/gusty/commits)
 ## License
 
-Private project - All rights reserved
+Private. All rights reserved.

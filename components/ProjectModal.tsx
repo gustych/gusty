@@ -25,7 +25,6 @@ function getDefaultTab(project: Project | null) {
 export default function ProjectModal({ project, isOpen, onClose }: ProjectModalProps) {
   const [activeTab, setActiveTab] = useState<'design' | 'ai'>(() => getDefaultTab(project));
   const [expandedTechStack, setExpandedTechStack] = useState(false);
-  const [expandedLessons, setExpandedLessons] = useState(false);
   const modalRef = useRef<HTMLDivElement>(null);
   const closeButtonRef = useRef<HTMLButtonElement>(null);
   const { lang } = useLanguage();
@@ -175,21 +174,12 @@ export default function ProjectModal({ project, isOpen, onClose }: ProjectModalP
             <p id="modal-description" className="text-xs md:text-sm lg:text-base text-brand-black/80 font-terminal">{t(project.description, lang)}</p>
           </div>
 
-          {/* Tech Stack and Lessons Learned - Buttons side by side, content uses full width */}
+          {/* Tech Stack */}
           <div className="mt-4 md:mt-6">
-            {/* Buttons row - side by side */}
             <div className="flex flex-wrap gap-4 md:gap-6">
-              {/* Tech Stack Button */}
               {project.tags.length > 0 && (
                 <button
-                  onClick={() => {
-                    if (expandedTechStack) {
-                      setExpandedTechStack(false);
-                    } else {
-                      setExpandedTechStack(true);
-                      setExpandedLessons(false);
-                    }
-                  }}
+                  onClick={() => setExpandedTechStack(!expandedTechStack)}
                   className="flex items-center gap-2 text-left hover:text-brand-black transition-colors touch-manipulation focus:outline-none focus:ring-2 focus:ring-sun-red focus:ring-offset-1 rounded"
                   aria-expanded={expandedTechStack}
                   aria-label={`Toggle ${tr.techStack}`}
@@ -205,36 +195,8 @@ export default function ProjectModal({ project, isOpen, onClose }: ProjectModalP
                   </svg>
                 </button>
               )}
-
-              {/* Lessons Learned Button - Only for BadenLEG project */}
-              {project.id === 'badenleg' && (
-                <button
-                  onClick={() => {
-                    if (expandedLessons) {
-                      setExpandedLessons(false);
-                    } else {
-                      setExpandedLessons(true);
-                      setExpandedTechStack(false);
-                    }
-                  }}
-                  className="flex items-center gap-2 text-left hover:text-brand-black transition-colors touch-manipulation focus:outline-none focus:ring-2 focus:ring-sun-red focus:ring-offset-1 rounded"
-                  aria-expanded={expandedLessons}
-                  aria-label={`Toggle ${tr.lessonsLearned}`}
-                >
-                  <h3 className="text-xs md:text-sm font-terminal font-semibold text-brand-black/60 hover:text-brand-black">{tr.lessonsLearned}</h3>
-                  <svg
-                    className={`w-4 h-4 text-brand-black/60 transition-transform duration-200 ${expandedLessons ? 'rotate-180' : ''}`}
-                    fill="none"
-                    stroke="currentColor"
-                    viewBox="0 0 24 24"
-                  >
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
-                  </svg>
-                </button>
-              )}
             </div>
 
-            {/* Content - Full width below buttons */}
             {expandedTechStack && (
               <div className="mt-2 w-full">
                 <div className="flex flex-wrap gap-2">
@@ -246,27 +208,6 @@ export default function ProjectModal({ project, isOpen, onClose }: ProjectModalP
                       {tag}
                     </span>
                   ))}
-                </div>
-              </div>
-            )}
-
-            {expandedLessons && (
-              <div className="mt-2 w-full space-y-3">
-                <div>
-                  <p className="text-xs md:text-sm font-terminal font-semibold text-brand-black mb-1">{tr.lessonsWorkedWell}</p>
-                  <p className="text-xs md:text-sm text-brand-black/80 font-terminal">{tr.lessonsWorkedWellText}</p>
-                </div>
-                <div>
-                  <p className="text-xs md:text-sm font-terminal font-semibold text-brand-black mb-1">{tr.lessonsDifferently}</p>
-                  <p className="text-xs md:text-sm text-brand-black/80 font-terminal">{tr.lessonsDifferentlyText}</p>
-                </div>
-                <div>
-                  <p className="text-xs md:text-sm font-terminal font-semibold text-brand-black mb-1">{tr.lessonsAi}</p>
-                  <p className="text-xs md:text-sm text-brand-black/80 font-terminal">{tr.lessonsAiText}</p>
-                </div>
-                <div>
-                  <p className="text-xs md:text-sm font-terminal font-semibold text-brand-black mb-1">{tr.lessonsSurprise}</p>
-                  <p className="text-xs md:text-sm text-brand-black/80 font-terminal">{tr.lessonsSurpriseText}</p>
                 </div>
               </div>
             )}
